@@ -10,7 +10,7 @@ class Graph {
     private:
         int V;    
         list<int> *adj; 
-        void AllPathsUtil (int v1, int v2, bool visited[], int path[], int index); 
+        void AllPathsUtil (int v1, int v2, bool visited [], int path [], int index); 
     public: 
         Graph(int V);   
         bool pathExist; 
@@ -67,15 +67,27 @@ void Graph::AllPaths (int v1, int v2) {
   
 int main () 
 {
-    Graph g(4);
-    g.addEdge(0, 1);
-    g.addEdge(0, 2);
-    g.addEdge(1, 2);
-    g.addEdge(2, 3);
-	
+    int v;
+    vector<vector<int>> matrix;
+    cout << "Input the number of vertices: "; cin >> v; 
+    Graph g(v);
+    
+    for (int i = 0; i < v; i++) {
+        vector<int> temp;
+        for (int j = 0; j < v; j++) {
+            int number; cin >> number;
+            temp.push_back(number);
+        }
+        matrix.push_back(temp);
+    }
+    for (int i = 0; i < v; i++)
+        for (int j = 0; j < v; j++)
+            if (matrix[i][j] == 1)
+                g.addEdge(i, j);
+
     int ans = INF;
-    for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < v; i++)
+        for (int j = 0; j < v; j++) {
             cout << "   Path between " << i << " and " << j << endl;
             if (i != j) {
                 g.AllPaths(i, j);
