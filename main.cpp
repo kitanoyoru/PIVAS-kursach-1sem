@@ -2,9 +2,8 @@
 #include<list> 
 using namespace std;  
 
-
 class Graph {
-    private: 
+    private:
         int V;    
         list<int> *adj; 
         void AllPathsUtil (int v1, int v2, bool visited[], int path[], int index); 
@@ -33,10 +32,9 @@ void Graph::AllPathsUtil (int v1, int v2, bool visited[], int path[], int index)
 
     if (v1 == v2) {
         int i;
-        if(!pathExist)
-            cout << "Following are the paths between " <<path[0] << " and " << path[index-1] << endl;
+
         pathExist = true;
-        for(i=0; i < index-1; i++)
+        for(i = 0; i < index-1; i++)
             cout << path[i] << "->";
         cout << path[i] << endl;
     }
@@ -61,7 +59,8 @@ void Graph::AllPaths (int v1, int v2) {
     AllPathsUtil(v1,v2,visited,path,index);
 } 
   
-int main () {
+int main () 
+{
     Graph g(4);
     g.addEdge(0, 1);
     g.addEdge(0, 2);
