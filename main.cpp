@@ -7,12 +7,12 @@ class Graph {
     private: 
         int V;    
         list<int> *adj; 
-        void printAllPathsUtil (int v1, int v2, bool visited[], int path[], int index); 
+        void AllPathsUtil (int v1, int v2, bool visited[], int path[], int index); 
     public: 
         Graph(int V);   
         bool pathExist; 
         void addEdge (int v, int w); 
-        void printAllPaths (int v1, int v2);
+        void AllPaths (int v1, int v2);
     
 }; 
   
@@ -26,7 +26,7 @@ void Graph::addEdge (int v, int w) {
     adj[w].push_back(v); 
 } 
 
-void Graph::printAllPathsUtil (int v1, int v2, bool visited[], int path[], int index) { 
+void Graph::AllPathsUtil (int v1, int v2, bool visited[], int path[], int index) { 
     visited[v1] = true;
     path[index] = v1;
     index++;
@@ -43,14 +43,14 @@ void Graph::printAllPathsUtil (int v1, int v2, bool visited[], int path[], int i
     else { 
         for (list<int>::iterator i = adj[v1].begin(); i != adj[v1].end(); ++i) 
             if (!visited[*i]) 
-                printAllPathsUtil(*i, v2, visited, path, index); 
+                AllPathsUtil(*i, v2, visited, path, index); 
     }
 
     index--;
     visited[v1] = false;
 } 
   
-void Graph::printAllPaths (int v1, int v2) { 
+void Graph::AllPaths (int v1, int v2) { 
     bool *visited = new bool [V]; 
     for (int i = 0; i < V; i++) 
         visited[i] = false;
@@ -58,7 +58,7 @@ void Graph::printAllPaths (int v1, int v2) {
     int index = 0;
     pathExist=false;
     
-    printAllPathsUtil(v1,v2,visited,path,index);
+    AllPathsUtil(v1,v2,visited,path,index);
 } 
   
 int main () {
@@ -72,7 +72,7 @@ int main () {
         for (int j = 0; j < 4; j++) {
             cout << "   Path between " << i << " and " << j << endl;
             if (i != j)
-                g.printAllPaths(i, j);
+                g.AllPaths(i, j);
             if (!g.pathExist)
                 cout << "There is no path exist between " << i << " and " << j << endl;
         }
