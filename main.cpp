@@ -1,6 +1,10 @@
 #include<iostream>
+#include <vector>
 #include<list> 
+#define INF 2147483647;
 using namespace std;  
+
+int count = 0;
 
 class Graph {
     private:
@@ -37,6 +41,7 @@ void Graph::AllPathsUtil (int v1, int v2, bool visited[], int path[], int index)
         for(i = 0; i < index-1; i++)
             cout << path[i] << "->";
         cout << path[i] << endl;
+        count++;
     }
     else { 
         for (list<int>::iterator i = adj[v1].begin(); i != adj[v1].end(); ++i) 
@@ -54,6 +59,7 @@ void Graph::AllPaths (int v1, int v2) {
         visited[i] = false;
     int *path = new int [V];
     int index = 0;
+    count = 0;
     pathExist=false;
     
     AllPathsUtil(v1,v2,visited,path,index);
@@ -67,14 +73,20 @@ int main ()
     g.addEdge(1, 2);
     g.addEdge(2, 3);
 	
+    int ans = INF;
     for (int i = 0; i < 4; i++)
         for (int j = 0; j < 4; j++) {
             cout << "   Path between " << i << " and " << j << endl;
-            if (i != j)
+            if (i != j) {
                 g.AllPaths(i, j);
+                if (ans > count)
+                    ans = count;
+            }
             if (!g.pathExist)
                 cout << "There is no path exist between " << i << " and " << j << endl;
         }
+    
+    cout << "Edge connectivity: " << ans << endl;
 
     return 0; 
 } 
