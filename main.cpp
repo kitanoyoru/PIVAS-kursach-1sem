@@ -1,35 +1,35 @@
-#include<iostream>
+#include <iostream>
 #include <vector>
-#include<list> 
-#define INF 2147483647;
+#include <list> 
+#define INF 2147483647
 using namespace std;  
 
 int count = 0;
 
 class Graph {
     private:
-        int V;    
+        int vertices;    
         list<int> *adj; 
         void AllPathsUtil (int v1, int v2, bool visited [], int path [], int index); 
     public: 
-        Graph(int V);   
+        Graph(int vertices);   
         bool pathExist; 
-        void addEdge (int v, int w); 
+        void addEdge (int v1, int v2); 
         void AllPaths (int v1, int v2);
     
 }; 
   
-Graph::Graph(int V) { 
-    this->V = V; 
-    adj = new list<int> [V]; 
+Graph::Graph(int vertices) { 
+    this->vertices = vertices; 
+    adj = new list<int> [vertices]; 
 } 
   
-void Graph::addEdge (int v, int w) { 
-    adj[v].push_back(w);
-    adj[w].push_back(v); 
+void Graph::addEdge (int v1, int v2) { 
+    adj[v1].push_back(v2);
+    adj[v2].push_back(v1); 
 } 
 
-void Graph::AllPathsUtil (int v1, int v2, bool visited[], int path[], int index) { 
+void Graph::AllPathsUtil (int v1, int v2, bool visited [], int path [], int index) { 
     visited[v1] = true;
     path[index] = v1;
     index++;
@@ -54,15 +54,15 @@ void Graph::AllPathsUtil (int v1, int v2, bool visited[], int path[], int index)
 } 
   
 void Graph::AllPaths (int v1, int v2) { 
-    bool *visited = new bool [V]; 
-    for (int i = 0; i < V; i++) 
+    bool *visited = new bool [vertices]; 
+    for (int i = 0; i < vertices; i++) 
         visited[i] = false;
-    int *path = new int [V];
+    int *path = new int [vertices];
     int index = 0;
     count = 0;
     pathExist=false;
     
-    AllPathsUtil(v1,v2,visited,path,index);
+    AllPathsUtil(v1, v2, visited, path, index);
 } 
   
 int main () 
@@ -85,20 +85,21 @@ int main ()
             if (matrix[i][j] == 1)
                 g.addEdge(i, j);
 
+    cout << '\n';
     int ans = INF;
     for (int i = 0; i < v; i++)
         for (int j = 0; j < v; j++) {
-            cout << "   Path between " << i << " and " << j << endl;
             if (i != j) {
+                cout << "\tPath between " << i << " and " << j << endl;
                 g.AllPaths(i, j);
                 if (ans > count)
                     ans = count;
+                if (!g.pathExist)
+                    cout << "There is no path exist between " << i << " and " << j << endl;
             }
-            if (!g.pathExist)
-                cout << "There is no path exist between " << i << " and " << j << endl;
         }
     
-    cout << "Edge connectivity: " << ans << endl;
+    cout << "\nEdge connectivity: " << ans << endl;
 
     return 0; 
 } 
